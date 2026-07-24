@@ -1,0 +1,31 @@
+{
+  "name": "test-human-auto",
+  "description": "All nodes in auto mode — should behave identically to Phase 1, no human interruption.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 市场调研",
+      "type": "skill",
+      "skill_name": "mock-market-research",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 竞品分析",
+      "type": "skill",
+      "skill_name": "mock-competitive-analysis",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 头脑风暴",
+      "type": "skill",
+      "skill_name": "mock-brainstorming",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "B", "to": "C" }
+  ]
+}

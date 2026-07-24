@@ -1,0 +1,31 @@
+{
+  "name": "test-human-flag",
+  "description": "Node B in flag mode with 2-second timeout — auto-continues if no input. Tests the timeout path.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 市场调研",
+      "type": "skill",
+      "skill_name": "mock-market-research",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 竞品分析（需审查）",
+      "type": "skill",
+      "skill_name": "mock-competitive-analysis",
+      "config": { "duration_seconds": 1, "human_collab": "flag", "flag_timeout": 2 }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 头脑风暴",
+      "type": "skill",
+      "skill_name": "mock-brainstorming",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "B", "to": "C" }
+  ]
+}

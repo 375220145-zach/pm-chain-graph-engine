@@ -1,0 +1,47 @@
+{
+  "name": "test-gate-retry",
+  "description": "Gate catches a failure, retries the bad node (which succeeds on retry), gate passes.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 数据准备",
+      "type": "skill",
+      "skill_name": "mock-prep",
+      "config": { "duration_seconds": 1 }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 竞品分析（首次失败）",
+      "type": "skill",
+      "skill_name": "mock-competitive-analysis",
+      "config": { "duration_seconds": 1, "fail_mode": "first" }
+    },
+    {
+      "id": "gate_1",
+      "name": "门禁 - 竞品审核",
+      "type": "gate",
+      "skill_name": "",
+      "config": {
+        "max_retries": 2,
+        "rules": [
+          { "type": "file_exists", "path": "${node.A.output_dir}/A.md" },
+          { "type": "file_exists", "path": "${node.B.output_dir}/B.md" },
+          { "type": "json_field_present", "path": "${node.B.output_dir}/B.json", "field": "status" }
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 头脑风暴",
+      "type": "skill",
+      "skill_name": "mock-brainstorming",
+      "config": { "duration_seconds": 1 }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "A", "to": "gate_1" },
+    { "from": "B", "to": "gate_1" },
+    { "from": "gate_1", "to": "C" }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "test-empty",
+  "description": "Empty graph — no nodes, no edges. Edge case test.",
+  "nodes": [],
+  "edges": []
+}

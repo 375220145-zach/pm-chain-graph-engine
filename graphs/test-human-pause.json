@@ -1,0 +1,40 @@
+{
+  "name": "test-human-pause",
+  "description": "Node B in pause mode — halts execution until user chooses an option. Tests the pause-and-wait path.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 市场调研",
+      "type": "skill",
+      "skill_name": "mock-market-research",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 竞品分析（需决策）",
+      "type": "skill",
+      "skill_name": "mock-competitive-analysis",
+      "config": {
+        "duration_seconds": 1,
+        "human_collab": "pause",
+        "pause_prompt": "竞品定价与市场假设偏差超过50%。请选择方向：",
+        "pause_options": [
+          { "key": "c", "label": "继续 — 以竞品数据为准" },
+          { "key": "r", "label": "重试 — 重新执行竞品分析" },
+          { "key": "a", "label": "中止 — 停止流程，先查资料" }
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 头脑风暴",
+      "type": "skill",
+      "skill_name": "mock-brainstorming",
+      "config": { "duration_seconds": 1, "human_collab": "auto" }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "B", "to": "C" }
+  ]
+}

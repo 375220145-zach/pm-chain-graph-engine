@@ -1,0 +1,31 @@
+{
+  "name": "test-simple",
+  "description": "3-node linear pipeline: A→B→C. Tests basic serial execution and dependency ordering.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 市场调研",
+      "type": "skill",
+      "skill_name": "mock-market-research",
+      "config": { "duration_seconds": 2 }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 竞品分析",
+      "type": "skill",
+      "skill_name": "mock-competitive-analysis",
+      "config": { "duration_seconds": 2 }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 头脑风暴",
+      "type": "skill",
+      "skill_name": "mock-brainstorming",
+      "config": { "duration_seconds": 2 }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "B", "to": "C" }
+  ]
+}

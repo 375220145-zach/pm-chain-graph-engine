@@ -1,0 +1,14 @@
+{
+  "name": "test-cycle",
+  "description": "INVALID graph with a cycle: A→B→C→A. Loader should reject this.",
+  "nodes": [
+    { "id": "A", "name": "Step A", "type": "skill" },
+    { "id": "B", "name": "Step B", "type": "skill" },
+    { "id": "C", "name": "Step C", "type": "skill" }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "B", "to": "C" },
+    { "from": "C", "to": "A" }
+  ]
+}

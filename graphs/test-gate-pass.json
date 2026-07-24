@@ -1,0 +1,57 @@
+{
+  "name": "test-gate-pass",
+  "description": "Diamond with gate: A→B, A→C, B→gate, C→gate, gate→D. All nodes produce valid output, gate should pass.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 市场调研",
+      "type": "skill",
+      "skill_name": "mock-market-research",
+      "config": { "duration_seconds": 1 }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 竞品分析",
+      "type": "skill",
+      "skill_name": "mock-competitive-analysis",
+      "config": { "duration_seconds": 1.5 }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 定价策略",
+      "type": "skill",
+      "skill_name": "mock-pricing",
+      "config": { "duration_seconds": 1.5 }
+    },
+    {
+      "id": "gate_1",
+      "name": "门禁 - 竞品+定价审核",
+      "type": "gate",
+      "skill_name": "",
+      "config": {
+        "max_retries": 2,
+        "rules": [
+          { "type": "file_exists", "path": "${node.B.output_dir}/B.md" },
+          { "type": "file_exists", "path": "${node.C.output_dir}/C.md" },
+          { "type": "file_min_size", "path": "${node.B.output_dir}/B.json", "min_bytes": 10 },
+          { "type": "json_field_present", "path": "${node.C.output_dir}/C.json", "field": "node_id" },
+          { "type": "json_field_non_empty", "path": "${node.B.output_dir}/B.json", "field": "status" }
+        ]
+      }
+    },
+    {
+      "id": "D",
+      "name": "Step D - 头脑风暴",
+      "type": "skill",
+      "skill_name": "mock-brainstorming",
+      "config": { "duration_seconds": 1 }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "A", "to": "C" },
+    { "from": "B", "to": "gate_1" },
+    { "from": "C", "to": "gate_1" },
+    { "from": "gate_1", "to": "D" }
+  ]
+}

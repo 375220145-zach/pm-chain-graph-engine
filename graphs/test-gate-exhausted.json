@@ -1,0 +1,46 @@
+{
+  "name": "test-gate-exhausted",
+  "description": "Gate catches a failure, retries exhausted (node always fails), gate halts execution.",
+  "nodes": [
+    {
+      "id": "A",
+      "name": "Step A - 数据准备",
+      "type": "skill",
+      "skill_name": "mock-prep",
+      "config": { "duration_seconds": 1 }
+    },
+    {
+      "id": "B",
+      "name": "Step B - 始终失败的节点",
+      "type": "skill",
+      "skill_name": "mock-broken",
+      "config": { "duration_seconds": 1, "fail_mode": "always" }
+    },
+    {
+      "id": "gate_1",
+      "name": "门禁 - 最终失败",
+      "type": "gate",
+      "skill_name": "",
+      "config": {
+        "max_retries": 2,
+        "rules": [
+          { "type": "file_exists", "path": "${node.A.output_dir}/A.md" },
+          { "type": "file_exists", "path": "${node.B.output_dir}/B.md" }
+        ]
+      }
+    },
+    {
+      "id": "C",
+      "name": "Step C - 不应到达",
+      "type": "skill",
+      "skill_name": "mock-should-not-run",
+      "config": { "duration_seconds": 1 }
+    }
+  ],
+  "edges": [
+    { "from": "A", "to": "B" },
+    { "from": "A", "to": "gate_1" },
+    { "from": "B", "to": "gate_1" },
+    { "from": "gate_1", "to": "C" }
+  ]
+}
