@@ -20,3 +20,13 @@ Each stage: defined input/output + quality gate. Cross-stage conflict detection 
 ## Stack
 
 Python · DAG · Claude Code Skill Framework
+
+## Usage
+
+```bash
+# Generate graph JSONs for all categories
+python main.py generate
+
+# Run a single pipeline
+python main.py run graphs/pm-chain-quick.json
+```
